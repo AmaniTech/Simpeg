@@ -1,29 +1,99 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.base')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+@section('content')
+    <section class="section">
+        <div class="section-header">
+            <h1>Profile</h1>
+            <div style="display: inline-block; margin-right: 10px;"><a href="{{ route('admin.dashboard') }}">Dashboard /</a>
+            </div>
+            <div style="display: inline-block;"><a href="#">Profile</a>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+        </div>
+        <div class="section-body">
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
+            <div class="row mt-sm-4">
+
+                <div class="col-12 col-md-12 col-lg-7">
+                    <div class="card">
+                        <form method="POST" class="needs-validation" novalidate="" action="/profile/update"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-header">
+                                <h4>Update Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <div class="mb-3">
+                                            <img width="100px" src="{{ asset(Auth::user()->image) }}" alt="">
+                                        </div>
+                                        <label>Image</label>
+                                        <input type="file" name="image" class="form-control">
+
+                                    </div>
+
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>Name</label>
+                                        <input type="text" name="name" class="form-control"
+                                            value="{{ Auth::user()->name }}">
+
+                                    </div>
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>Email</label>
+                                        <input type="text" name="email" class="form-control"
+                                            value="{{ Auth::user()->email }}">
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
+
+                <div class="col-12 col-md-12 col-lg-7">
+                    <div class="card">
+
+                        <form method="post" class="needs-validation" novalidate="" action="/profile/update/password"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-header">
+                                <h4>Update Password</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="form-group col-12">
+                                        <label>Current Password</label>
+                                        <input type="password" name="current_password" class="form-control">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>New Password</label>
+                                        <input type="password" name="password" class="form-control">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label>Confirm Password</label>
+                                        <input type="password" name="password_confirmation" class="form-control">
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
-</x-app-layout>
+    </section>
+@endsection

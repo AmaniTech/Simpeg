@@ -9,7 +9,6 @@ use App\Models\Jadwal;
 use App\Models\Rjabatan;
 use App\Models\Rpenelitian;
 use App\Models\Rpendidikan;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class DosenController extends Controller

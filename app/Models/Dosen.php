@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Rjabatan;
 use App\Models\Rpenelitian;
 use App\Models\Rpendidikan;
+
 class Dosen extends Model
 {
     use HasFactory;
@@ -34,7 +35,7 @@ class Dosen extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function rjabatans()
@@ -50,5 +51,9 @@ class Dosen extends Model
     public function rpenelitian()
     {
         return $this->hasMany(Rpenelitian::class);
+    }
+    public function jabatan_fungsional()
+    {
+        return $this->hasMany(JabFungsional::class);
     }
 }

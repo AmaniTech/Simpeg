@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('prodi', 100)->nullable();
             $table->string('jurusan', 100)->nullable();
             $table->string('tahun_angkatan', 100)->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

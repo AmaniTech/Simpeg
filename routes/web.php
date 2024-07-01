@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Dosen\JbtFungsionalController;
 
 Route::middleware('guest')->group(function () {
     // Route::get('register', [RegisteredUserController::class, 'create'])
@@ -107,6 +108,10 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
     Route::delete('dosen/{id}/jabatan/{jabatanId}', [DosenController::class, 'deleteJabatan'])->name('dosen.deleteJabatan');
     Route::delete('dosen/{id}/penelitian/{penelitianId}', [DosenController::class, 'deletePenelitian'])->name('dosen.deletePenelitian');
     Route::delete('dosen/{id}/pendidikan/{pendidikanId}', [DosenController::class, 'deletePendidikan'])->name('dosen.deletePendidikan');
+
+    // jabatan fungsional
+    Route::post('/add/jbtfung/{id}', [JbtFungsionalController::class, 'add']);
+    // end jabatan fungsional
 });
 
 Route::group(['auth', "middleware" => 'role:mahasiswa'], function () {

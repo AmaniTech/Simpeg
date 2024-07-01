@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
-use App\Models\DosenMatkul;
-use App\Models\Matkul;
 use App\Models\Sks;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use App\Models\Gaji;
@@ -173,7 +170,7 @@ class AdminController extends Controller
             'image' => $request->image,
             'phone' => $request->phone,
             'email' => $request->email,
-            'role' => $request->role,
+            'role' => $role,
             'status' => $request->status,
             'password' => Hash::make($request->password),
         ]);

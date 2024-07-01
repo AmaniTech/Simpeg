@@ -4,9 +4,6 @@
         <button type="button" class="btn-create bg-warning" data-toggle="modal" data-target="#add-pendidikan">
             Tambah
         </button>
-
-
-
     </div>
     <div class="card-body">
         @if ($dosen->rpendidikan)

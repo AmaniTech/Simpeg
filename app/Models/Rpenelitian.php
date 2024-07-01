@@ -11,9 +11,7 @@ class Rpenelitian extends Model
     use HasFactory;
 
     protected $table = 'rpenelitian';
-    protected $fillable = [
-        'dosen_id', 'judul_penelitian', 'tahun_penelitian', 'bukti_penelitian'
-    ];
+    protected $guarded = ['id'];
 
     public function dosen()
     {

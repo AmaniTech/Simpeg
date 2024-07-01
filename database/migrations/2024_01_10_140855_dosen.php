@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('dosen', function (Blueprint $table) {
             $table->id();
             $table->string('nip', 10)->nullable();
-            $table->string('nama', 100);
             $table->string('alamat', 100)->nullable();
             $table->string('prodi', 100)->nullable();
             $table->string('jenjang', 100)->nullable();
             $table->string('gelar', 100)->nullable();
             $table->string('tahun_masuk', 100)->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

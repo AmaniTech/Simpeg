@@ -100,13 +100,17 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
     Route::post('/rjabatan/{id}', [DosenController::class, 'storeJabatan'])->name('dosen.profile.rjabatan');
     Route::post('/rpenelitian/{id}', [DosenController::class, 'storeRpenelitian'])->name('dosen.profile.rpenelitian');
     Route::post('/rpendidikan/{id}', [DosenController::class, 'storeRpendidikan'])->name('dosen.profile.rpendidikan');
-    Route::post('/dosen/profile/update/{id}', [DosenController::class, 'update'])->name('dosen.profile.update');
+    Route::post('/dosen/profile/update/{id}', [DosenController::class, 'update_datadiri'])->name('dosen.profile.update');
     Route::patch('/dosen/profile/update-jabatan/{id}/{jabatanId}', [DosenController::class, 'updateJabatan'])->name('dosen.profile.updateJabatan');
     Route::patch('/dosen/profile/update-penelitian/{id}/{penelitianId}', [DosenController::class, 'updatePenelitian'])->name('dosen.profile.updatePenelitian');
     Route::patch('/dosen/profile/update-pendidikan/{id}/{pendidikanId}', [DosenController::class, 'updatePendidikan'])->name('dosen.profile.updatePendidikan');
     Route::delete('dosen/{id}/jabatan/{jabatanId}', [DosenController::class, 'deleteJabatan'])->name('dosen.deleteJabatan');
     Route::delete('dosen/{id}/penelitian/{penelitianId}', [DosenController::class, 'deletePenelitian'])->name('dosen.deletePenelitian');
     Route::delete('dosen/{id}/pendidikan/{pendidikanId}', [DosenController::class, 'deletePendidikan'])->name('dosen.deletePendidikan');
+
+    // data diri
+    // Route::get('/dosen/datadiri/{id}',  [AdminController::class, 'showDosen']);
+    // end data diri
 });
 
 Route::group(['auth', "middleware" => 'role:mahasiswa'], function () {

@@ -178,14 +178,14 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if($role == 'dosen'){
+        if ($role == 'dosen') {
             $userId = User::where('name', $request->name)->value('id');
             Dosen::create([
                 'user_id' => $userId,
                 'nama' => $request->name
             ]);
         }
-        if($role == 'mahasiswa'){
+        if ($role == 'mahasiswa') {
             $userIds = User::where('name', $request->name)->value('id');
             Mahasiswa::create([
                 'user_id' => $userIds,

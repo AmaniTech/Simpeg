@@ -9,6 +9,7 @@ use App\Models\Jadwal;
 use App\Models\Rjabatan;
 use App\Models\Rpenelitian;
 use App\Models\Rpendidikan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class DosenController extends Controller
@@ -27,7 +28,7 @@ class DosenController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $dosen = $user->dosen()->with(['rjabatans', 'rpenelitian','rpendidikan'])->first();
+        $dosen = $user->dosen()->with(['rjabatans', 'rpenelitian', 'rpendidikan'])->first();
 
         return view('dosen.profile.index', [
             'dosen' => $dosen,
@@ -98,17 +99,13 @@ class DosenController extends Controller
 
     public function storeRpenelitian(Request $request, $id)
     {
-        $request->validate([
-            'judul_penelitian' => 'required|string|max:255',
-            'tahun_penelitian' => 'required|string|max:4',
-            'bukti_penelitian' => 'required|string|max:100',
-        ]);
-
         Rpenelitian::create([
             'dosen_id' => $id,
             'judul_penelitian' => $request->judul_penelitian,
             'tahun_penelitian' => $request->tahun_penelitian,
             'bukti_penelitian' => $request->bukti_penelitian,
+            'sinta' => $request->sinta,
+            'penerbit' => $request->penerbit,
         ]);
 
         toastr()->success('Riwayat Penelitian ditambahkan');
@@ -156,19 +153,16 @@ class DosenController extends Controller
 
     public function updatePenelitian(Request $request, $id, $penelitianId)
     {
-        $request->validate([
-            'judul_penelitian' => 'required',
-            'tahun_penelitian' => 'required|numeric',
-            'bukti_penelitian' => 'required',
+        Rpenelitian::findOrFail($penelitianId)->update([
+            'judul_penelitian' => $request->judul_penelitian,
+            'tahun_penelitian' => $request->tahun_penelitian,
+            'bukti_penelitian' => $request->link,
+            'penerbit' => $request->penerbit,
+            'sinta' => $request->sinta,
         ]);
 
-        $penelitian = Rpenelitian::findOrFail($penelitianId);
-        $penelitian->judul_penelitian = $request->judul_penelitian;
-        $penelitian->tahun_penelitian = $request->tahun_penelitian;
-        $penelitian->bukti_penelitian = $request->bukti_penelitian;
-        $penelitian->save();
-
-        return redirect()->route('dosen.profile', ['id' => $id])->with('success', 'Riwayat penelitian berhasil diperbarui.');
+        toastr()->success('Data berhasil di update');
+        return redirect('/dosen/profile');
     }
     public function updatePendidikan(Request $request, $id, $pendidikanId)
     {
@@ -213,4 +207,22 @@ class DosenController extends Controller
         return redirect()->route('dosen.profile', ['id' => $id])->with('success', 'Riwayat pendidikan berhasil dihapus.');
     }
 
+    public function update_datadiri(Request $request, $id)
+    {
+        Dosen::where('id', $id)->update([
+            'nip' => $request->nip,
+            'alamat' => $request->alamat,
+            'prodi' => $request->prodi,
+            'jenjang' => $request->jenjang,
+            'gelar' => $request->gelar,
+            'tahun_masuk' => $request->tahun_masuk,
+        ]);
+
+        $dosen = Dosen::find($id);
+        $dosen->user->update([
+            'name' => $request->nama,
+        ]);
+
+        return redirect('/dosen/profile')->with('success', 'Data Berhasil di Update.');
+    }
 }

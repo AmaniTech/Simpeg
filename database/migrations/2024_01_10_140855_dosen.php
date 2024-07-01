@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('nip', 10)->nullable();
+            $table->string('nidn', 20)->nullable();
+            $table->string('nis', 20)->nullable();
             $table->string('alamat', 100)->nullable();
             $table->string('prodi', 100)->nullable();
             $table->string('jenjang', 100)->nullable();

@@ -92,8 +92,8 @@ class DosenController extends Controller
             'tahun_akhir' => $request->tahun_akhir,
         ]);
 
-        toastr()->success('Riwayat Jabatan ditambahkan');
-        return redirect()->route('dosen.profile')->with('success', 'Riwayat Jabatan Ditambahkan');
+        toastr()->success('Jabatan ditambahkan');
+        return redirect()->route('dosen.profile');
     }
 
     public function storeRpenelitian(Request $request, $id)
@@ -107,29 +107,22 @@ class DosenController extends Controller
             'penerbit' => $request->penerbit,
         ]);
 
-        toastr()->success('Riwayat Penelitian ditambahkan');
-        return redirect()->route('dosen.profile')->with('success', 'Riwayat Penelitian Ditambahkan');
+        toastr()->success('Data berhasil ditambahkan');
+        return redirect()->route('dosen.profile');
     }
 
     public function storeRpendidikan(Request $request, $id)
     {
-        $request->validate([
-            'nama_institusi' => 'required|string|max:255',
-            'jenjang' => 'required|string|max:255',
-            'tahun_masuk' => 'required|string|max:4',
-            'tahun_keluar' => 'required|string|max:4',
-        ]);
-
         Rpendidikan::create([
             'dosen_id' => $id,
-            'nama_institusi' => $request->nama_institusi,
+            'nama_institusi' => $request->instansi,
             'jenjang' => $request->jenjang,
-            'tahun_masuk' => $request->tahun_masuk,
-            'tahun_keluar' => $request->tahun_keluar,
+            'tahun_masuk' => $request->thn_masuk,
+            'tahun_keluar' => $request->thn_lulus,
         ]);
 
         toastr()->success('Riwayat Pendidikan ditambahkan');
-        return redirect()->route('dosen.profile')->with('success', 'Riwayat Penelitian Ditambahkan');
+        return redirect()->route('dosen.profile');
     }
 
     public function updateJabatan(Request $request, $id, $jabatanId)
@@ -209,7 +202,8 @@ class DosenController extends Controller
     public function update_datadiri(Request $request, $id)
     {
         Dosen::where('id', $id)->update([
-            'nip' => $request->nip,
+            'nidn' => $request->nidn,
+            'nis' => $request->nis,
             'alamat' => $request->alamat,
             'prodi' => $request->prodi,
             'jenjang' => $request->jenjang,

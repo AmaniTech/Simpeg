@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('rpenelitian', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dosen_id');
+            $table->foreignId('dosen_id')->references('id')->on('dosen');
             $table->string('judul_penelitian');
             $table->string('tahun_penelitian');
             $table->string('bukti_penelitian');
+            $table->string('penerbit')->nullable();
+            $table->string('sinta')->nullable();
             $table->timestamps();
         });
     }

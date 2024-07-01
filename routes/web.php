@@ -107,10 +107,6 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
     Route::delete('dosen/{id}/jabatan/{jabatanId}', [DosenController::class, 'deleteJabatan'])->name('dosen.deleteJabatan');
     Route::delete('dosen/{id}/penelitian/{penelitianId}', [DosenController::class, 'deletePenelitian'])->name('dosen.deletePenelitian');
     Route::delete('dosen/{id}/pendidikan/{pendidikanId}', [DosenController::class, 'deletePendidikan'])->name('dosen.deletePendidikan');
-
-    // data diri
-    // Route::get('/dosen/datadiri/{id}',  [AdminController::class, 'showDosen']);
-    // end data diri
 });
 
 Route::group(['auth', "middleware" => 'role:mahasiswa'], function () {

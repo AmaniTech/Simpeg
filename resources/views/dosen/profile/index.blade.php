@@ -10,7 +10,10 @@
 
                     <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
-                            <b>NIP</b> <a class="float-right">{{ $dosen->nip }}</a>
+                            <b>NIDN</b> <a class="float-right">{{ $dosen->nidn }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>NIS</b> <a class="float-right">{{ $dosen->nis }}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Prodi</b> <a class="float-right">{{ $dosen->prodi }}</a>
@@ -34,9 +37,14 @@
                     <form action="{{ route('dosen.profile.update', $dosen->id) }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="nip">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip"
-                                value="{{ $dosen->nip }}">
+                            <label for="nidn">NIDN</label>
+                            <input type="text" class="form-control" id="nidn" name="nidn"
+                                value="{{ $dosen->nidn }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="nis">NIS</label>
+                            <input type="text" class="form-control" id="nis" name="nis"
+                                value="{{ $dosen->nis }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>
@@ -77,218 +85,19 @@
 
         <!-- Riwayat Jabatan Column -->
         <div class="col-md-8">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title"> Pendidikan</h3>
-                    <a href="" class="btn btn-primary bg-info btn-tool" id="btn-create">Tambah</a>
-                </div>
-                <div class="card-body">
-                    @if ($dosen->rpendidikan)
-                        @if ($dosen->rpendidikan->isEmpty())
-                            <p>Tidak ada riwayat pendidikan yang tersedia.</p>
-                        @else
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Institusi</th>
-                                        <th>Jenjang</th>
-                                        <th>Tahun Masuk</th>
-                                        <th>Tahun Keluar</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dosen->rpendidikan as $pendidikan)
-                                        <tr>
-                                            <td>{{ $pendidikan->nama_institusi }}</td>
-                                            <td>{{ $pendidikan->jenjang }}</td>
-                                            <td>{{ $pendidikan->tahun_masuk }}</td>
-                                            <td>{{ $pendidikan->tahun_keluar }}</td>
-                                            <td class="x-grid-cell-inner">
-                                                <div class="row">
-                                                    <a href="{{ route('dosen.profile.editrpendidikan', ['id' => $dosen->id, 'pendidikanId' => $pendidikan->id]) }}"
-                                                        class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip"
-                                                        title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <form
-                                                        action="{{ route('dosen.deletePendidikan', ['id' => $dosen->id, 'pendidikanId' => $pendidikan->id]) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat pendidikan ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            data-toggle="tooltip" title="Hapus"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    @else
-                        <p>Tidak ada riwayat pendidikan yang tersedia.</p>
-                    @endif
-                </div>
-            </div>
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Jabatan Struktural</h3>
-                    <a href="{{ route('dosen.profile.createJabatan', ['id' => $dosen->id]) }}"
-                        class="btn btn-primary bg-info btn-tool ml-auto">Tambah</a>
-                </div>
-                <div class="card-body">
-                    @if ($dosen->rjabatans)
-                        @if ($dosen->rjabatans->isEmpty())
-                            <p>Tidak ada riwayat jabatan yang tersedia.</p>
-                        @else
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Jabatan</th>
-                                        <th>Tahun Awal</th>
-                                        <th>Tahun Akhir</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dosen->rjabatans as $jabatan)
-                                        <tr>
-                                            <td>{{ $jabatan->nama_jabatan }}</td>
-                                            <td>{{ $jabatan->tahun_awal }}</td>
-                                            <td>{{ $jabatan->tahun_akhir }}</td>
-                                            <td class="x-grid-cell-inner">
-                                                <div class="row">
-                                                    <a href="{{ route('dosen.profile.editJabatan', ['id' => $dosen->id, 'jabatanId' => $jabatan->id]) }}"
-                                                        class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip"
-                                                        title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <form
-                                                        action="{{ route('dosen.deleteJabatan', ['id' => $dosen->id, 'jabatanId' => $jabatan->id]) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat jabatan ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            data-toggle="tooltip" title="Hapus"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    @else
-                        <p>Tidak ada riwayat jabatan yang tersedia.</p>
-                    @endif
-                </div>
-            </div>
-
-            {{-- jabatan funsional --}}
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Jabatan Fungsional</h3>
-                    <a href="" class="btn btn-primary bg-info btn-tool ml-auto">Tambah</a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama Jabatan</th>
-                                    <th>Kepangkatan</th>
-                                    <th>Golongan</th>
-                                    <th>Sertifikat</th>
-                                    <th>Tanggal Sertifikasi</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>awdawd</td>
-                                    <td>awdawd</td>
-                                    <td>awdawd</td>
-                                    <td>awdawd</td>
-                                    <td>awdawd</td>
-                                    <td class="x-grid-cell-inner">
-                                        <div class="row">
-                                            <a href="" class="btn btn-sm btn-outline-warning mx-2"
-                                                data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <form action="" method="POST"
-                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat jabatan ini?');">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                    data-toggle="tooltip" title="Hapus"><i
-                                                        class="fa fa-trash"></i></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
-            {{-- end jabatan funsional --}}
+            @include('dosen.profile.pendidikan')
 
 
-            {{--  Riwayat Penelitian Column --}}
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Jurnal</h3>
-                    <a href="{{ route('dosen.profile.createPenelitian', ['id' => $dosen->id]) }}"
-                        class="btn btn-primary bg-info btn-tool" id="btn-create">Tambah</a>
-                </div>
-                <div class="card-body">
-                    @if ($dosen->rpenelitian)
-                        @if ($dosen->rpenelitian->isEmpty())
-                            <p>Tidak ada riwayat jurnal yang tersedia.</p>
-                        @else
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Judul</th>
-                                        <th>Tahun Terbit</th>
-                                        <th>Penerbit</th>
-                                        <th>Sinta</th>
-                                        <th style="width:100px;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dosen->rpenelitian as $penelitian)
-                                        <tr>
-                                            <td>{{ $penelitian->judul_penelitian }}</td>
-                                            <td>{{ $penelitian->tahun_penelitian }}</td>
-                                            <td>{{ $penelitian->penerbit }}</td>
-                                            <td>{{ $penelitian->sinta }}</td>
-                                            <td class="x-grid-cell-inner">
-                                                <div class="row">
-                                                    <a href="{{ route('dosen.profile.editrpenelitian', ['id' => $dosen->id, 'penelitianId' => $penelitian->id]) }}"
-                                                        class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip"
-                                                        title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <form
-                                                        action="{{ route('dosen.deletePenelitian', ['id' => $dosen->id, 'penelitianId' => $penelitian->id]) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat penelitian ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                            data-toggle="tooltip" title="Hapus"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    @else
-                        <p>Tidak ada riwayat jurnal yang tersedia.</p>
-                    @endif
-                </div>
-            </div>
+            @include('dosen.profile.jabatan_struktural')
+
+            {{-- jabatan fungsional --}}
+            @include('dosen.profile.jabatan_fungsional')
+            {{-- end jabatan fungsional --}}
+
+            {{-- jurnal --}}
+            @include('dosen.profile.jurnal')
+            {{-- end jurnal --}}
+
 
 
 
@@ -326,7 +135,6 @@
         </div>
     </div>
 
-    <!-- JavaScript to show/hide forms -->
     <script>
         function showEditProfileForm() {
             document.getElementById('edit-profile-form').style.display = 'block';

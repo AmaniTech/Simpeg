@@ -24,4 +24,10 @@ class JbtFungsionalController extends Controller
         toastr()->success('Data berhasil ditambah');
         return redirect()->back();
     }
+    public function delete($id)
+    {
+        JabFungsional::destroy($id);
+        toastr()->success('Data berhasil dihapus');
+        return redirect('/dosen/profile');
+    }
 }

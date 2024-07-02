@@ -39,8 +39,9 @@
                                 </td>
                                 <td class="x-grid-cell-inner">
                                     <div class="row">
-                                        <form action="" method="POST"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus riwayat jabatan ini?');">
+                                        <form action="/del/jbtfung/{{ $j->id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger"
                                                 data-toggle="tooltip" title="Hapus"><i
                                                     class="fa fa-trash"></i></button>

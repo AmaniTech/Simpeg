@@ -111,6 +111,7 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
 
     // jabatan fungsional
     Route::post('/add/jbtfung/{id}', [JbtFungsionalController::class, 'add']);
+    Route::delete('/del/jbtfung/{id}', [JbtFungsionalController::class, 'delete']);
     // end jabatan fungsional
 });
 

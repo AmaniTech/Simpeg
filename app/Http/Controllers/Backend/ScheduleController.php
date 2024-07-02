@@ -15,8 +15,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $jadwal = Jadwal::sortByTanggal()->with(['matkul','dosen'])->get();
-        return view('dosen.schedule.index',[
+        $jadwal = Jadwal::sortByTanggal()->with(['matkul', 'dosen'])->get();
+        return view('dosen.schedule.index', [
             'pageTitle' => 'Schedule',
             'jadwal' => $jadwal
         ]);
@@ -28,9 +28,9 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $matkul = Matkul::get(['id','nama_matkul']);
-        $dosen = Dosen::get(['id','nama']);
-        return view('dosen.schedule.create',[
+        $matkul = Matkul::get(['id', 'nama_matkul']);
+        $dosen = Dosen::get(['id', 'nama']);
+        return view('dosen.schedule.create', [
             'matkul' => $matkul,
             'dosen' => $dosen
         ]);
@@ -71,10 +71,10 @@ class ScheduleController extends Controller
     public function edit(string $id)
     {
         $jadwal = Jadwal::where('id', $id)
-                            ->firstOrFail();
-        $matkul = Matkul::get(['id','nama_matkul']);
-        $dosen = Dosen::get(['id','nama']);
-        return view('dosen.schedule.edit',[
+            ->firstOrFail();
+        $matkul = Matkul::get(['id', 'nama_matkul']);
+        $dosen = Dosen::with('user')->get();
+        return view('dosen.schedule.edit', [
             'pageTitle' => 'Edit Jadwal',
             'jadwal' => $jadwal,
             'matkul' => $matkul,
@@ -90,19 +90,10 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'pertemuan' => 'required',
-            'kelas' => 'required',
-            'tanggal' => 'required|date',
-            'jam' => 'required',
-            'matkul_id' => 'required|exists:matkuls,id',
-            'dosen_id' => 'required|exists:dosens,id',
-        ]);
-
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->update($request->all());
 
-        toastr()->success( 'Jadwal berhasil diperbarui.');
+        toastr()->success('Jadwal berhasil diperbarui.');
         return \redirect()->route('dosen.schedule');
     }
 

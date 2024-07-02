@@ -316,9 +316,7 @@ class AdminController extends Controller
             'nama' => 'required|string|max:100',
             'alamat' => 'required|string|max:100',
             'prodi' => 'required|string|max:100',
-            'jurusan' => 'required|string|max:100',
             'tahun_angkatan' => 'required|string|max:100',
-            'user_id' => 'required|exists:users,id'
         ]);
 
         $mahasiswa = Mahasiswa::findOrFail($id);

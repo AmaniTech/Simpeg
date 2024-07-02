@@ -20,13 +20,13 @@
         <div class="col-12">
             <div class="card card-outline card-primary">
                 <!-- <div class="card-header">
-                    <h3 class="card-title">List</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('dosen.create') }}" class="btn btn-primary bg-info btn-tool"
-                            id="btn-create">Tambah
-                            Dosen</a>
-                    </div>
-                </div> -->
+                                                    <h3 class="card-title">List</h3>
+                                                    <div class="card-tools">
+                                                        <a href="{{ route('dosen.create') }}" class="btn btn-primary bg-info btn-tool"
+                                                            id="btn-create">Tambah
+                                                            Dosen</a>
+                                                    </div>
+                                                </div> -->
                 <section id="loading">
                     <div class="centered">
                         <div id="divSpinner" class="spinner loading">
@@ -44,6 +44,7 @@
                                 <tr>
                                     <th width="30">No</th>
                                     <th>NIDN</th>
+                                    <th>NIS</th>
                                     <th>Nama</th>
                                     <th>Alamat</th>
                                     <th>Prodi</th>
@@ -54,8 +55,9 @@
                                 @foreach ($dosen as $key => $value)
                                     <tr>
                                         <td class="x-grid-cell-inner">{{ $key + 1 }}</td>
-                                        <td class="x-grid-cell-inner">{{ $value->nip ?? '-' }}</td>
-                                        <td class="x-grid-cell-inner">{{ $value->nama ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">{{ $value->nidn ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">{{ $value->nis ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">{{ $value->user->name ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->alamat ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->prodi ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">
@@ -63,18 +65,9 @@
                                                 <a href="{{ route('dosen.showProfile', $value->id) }}"
                                                     class="btn btn-sm btn-outline-info" data-toggle="tooltip"
                                                     title="Edit"><i class="fa fa-eye"></i></a>
-                                                <a href="{{ route('dosen.edits', $value->id) }}"
+                                                {{-- <a href="{{ route('dosen.edits', $value->id) }}"
                                                     class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip"
-                                                    title="Edit"><i class="fa fa-edit"></i></a>
-                                                <form method="post"
-                                                    onsubmit="return confirm('Hapus Data atas nama {{ $value->nama }}?');"
-                                                    action="{{ route('dosen.delete', $value->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        data-toggle="tooltip" title="Hapus"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </form>
+                                                    title="Edit"><i class="fa fa-edit"></i></a> --}}
                                             </div>
                                         </td>
                                     </tr>

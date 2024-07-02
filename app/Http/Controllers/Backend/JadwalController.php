@@ -18,8 +18,8 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwal = Jadwal::sortByTanggal()->with(['matkul','dosen'])->get();
-        return view('dosen.jadwal.index',[
+        $jadwal = Jadwal::sortByTanggal()->with(['matkul', 'dosen'])->get();
+        return view('dosen.jadwal.index', [
             'pageTitle' => 'Jadwal',
             'jadwal' => $jadwal
         ]);
@@ -27,8 +27,8 @@ class JadwalController extends Controller
 
     public function schedule()
     {
-        $schedule = Jadwal::sortByTanggal()->with(['matkul','dosen'])->get();
-        return view('mahasiswa.schedule.index',[
+        $schedule = Jadwal::sortByTanggal()->with(['matkul', 'dosen'])->get();
+        return view('mahasiswa.schedule.index', [
             'pageTitle' => 'Lihat Jadwal',
             'schedule' => $schedule
         ]);
@@ -38,10 +38,10 @@ class JadwalController extends Controller
     public function ubah(string $id)
     {
         $jadwal = Jadwal::where('id', $id)
-                            ->firstOrFail();
-        $matkul = Matkul::get(['id','nama_matkul']);
-        $dosen = Dosen::get(['id','nama']);
-        $mahasiswa = Mahasiswa::get(['id','nama']);
+            ->firstOrFail();
+        $matkul = Matkul::get(['id', 'nama_matkul']);
+        $dosen = Dosen::get(['id', 'nama']);
+        $mahasiswa = Mahasiswa::get(['id', 'nama']);
         $user = Auth::user();
         \Log::info('User ID: ' . $user->id);
         \Log::info('Mahasiswa: ' . $user->mahasiswa);
@@ -53,7 +53,7 @@ class JadwalController extends Controller
         if ($jadwal->mahasiswa_id != $user->mahasiswa->id) {
             return redirect()->route('mahasiswa.schedule')->with('error', 'Anda tidak memiliki izin untuk mengedit jadwal ini.');
         }
-        return view('mahasiswa.schedule.edit',[
+        return view('mahasiswa.schedule.edit', [
             'pageTitle' => 'Validasi Keterangan',
             'jadwal' => $jadwal,
             'matkul' => $matkul,
@@ -77,7 +77,7 @@ class JadwalController extends Controller
 
         $jadwal->update($request->all());
 
-        toastr()->success( 'Keterangan telah diperbarui.');
+        toastr()->success('Keterangan telah diperbarui.');
         return \redirect()->route('mahasiswa.schedule');
     }
 
@@ -86,10 +86,12 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        $matkul = Matkul::get(['id','nama_matkul']);
-        $dosen = Dosen::get(['id','nama']);
-        $mahasiswa = Mahasiswa::get(['id','nama']);
-        return view('dosen.jadwal.create',[
+        $matkul = Matkul::get(['id', 'nama_matkul']);
+        // $dosen = Dosen::get('id');
+        $mahasiswa = Mahasiswa::get(['id', 'nama']);
+        $dosen = Dosen::with('user')->get();
+
+        return view('dosen.jadwal.create', [
             'matkul' => $matkul,
             'dosen' => $dosen,
             'mahasiswa' => $mahasiswa
@@ -131,11 +133,11 @@ class JadwalController extends Controller
     public function edit(string $id)
     {
         $jadwal = Jadwal::where('id', $id)
-                            ->firstOrFail();
-        $matkul = Matkul::get(['id','nama_matkul']);
-        $dosen = Dosen::get(['id','nama']);
-        $mahasiswa = Mahasiswa::get(['id','nama']);
-        return view('admin.matkul.edit',[
+            ->firstOrFail();
+        $matkul = Matkul::get(['id', 'nama_matkul']);
+        $dosen = Dosen::get(['id', 'nama']);
+        $mahasiswa = Mahasiswa::get(['id', 'nama']);
+        return view('admin.matkul.edit', [
             'pageTitle' => 'Edit Jadwal',
             'jadwal' => $jadwal,
             'matkul' => $matkul,
@@ -162,7 +164,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->update($request->all());
 
-        toastr()->success( 'Jadwal berhasil diperbarui.');
+        toastr()->success('Jadwal berhasil diperbarui.');
         return \redirect()->route('dosen.jadwal');
     }
 

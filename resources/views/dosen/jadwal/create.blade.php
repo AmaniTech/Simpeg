@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <form method="POST" action="{{ route('jadwal.store') }}"  enctype="multipart/form-data">
+    <form method="POST" action="{{ route('jadwal.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="card">
             <div class="card-header">
@@ -13,37 +13,37 @@
                 <div class="form-group row">
                     <label for="pertemuan" class="col-sm-3 col-form-label font-weight-normal">Pertemuan</label>
                     <div class="col-md-9">
-                        <input type="text" id="pertemuan" name="pertemuan" class="form-control"
-                            placeholder="Pertemuan" required>
+                        <input type="text" id="pertemuan" name="pertemuan" class="form-control" placeholder="Pertemuan"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="kelas" class="col-sm-3 col-form-label font-weight-normal">KELAS</label>
                     <div class="col-md-9">
-                        <input type="text" id="kelas" name="kelas" class="form-control"
-                            placeholder="Kelas" required>
+                        <input type="text" id="kelas" name="kelas" class="form-control" placeholder="Kelas"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="tanggal" class="col-sm-3 col-form-label font-weight-normal">Tanggal</label>
                     <div class="col-md-2">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control"
-                            placeholder="TANGGAL" required>
+                        <input type="date" id="tanggal" name="tanggal" class="form-control" placeholder="TANGGAL"
+                            required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="jam" class="col-sm-3 col-form-label font-weight-normal">JAM</label>
                     <div class="col-md-2">
-                        <input type="time" id="jam" name="jam" class="form-control"
-                            placeholder="JAM" required>
+                        <input type="time" id="jam" name="jam" class="form-control" placeholder="JAM" required>
                     </div>
                 </div>
                 <div class="form-group row border-bottom pb-4">
                     <label for="matkul_id" class="col-sm-3 col-form-label font-weight-normal">Nama Matkul</label>
                     <div class="col-md-9">
                         <select class="form-control" name="matkul_id" id="matkul_id">
-                            @foreach($matkul as $key)
-                                <option {{ old('matkul_id') == $key->id ? 'selected' : null }} value="{{ $key->id }}">{{ $key->nama_matkul }}</option>
+                            @foreach ($matkul as $key)
+                                <option {{ old('matkul_id') == $key->id ? 'selected' : null }} value="{{ $key->id }}">
+                                    {{ $key->nama_matkul }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -52,8 +52,9 @@
                     <label for="dosen_id" class="col-sm-3 col-form-label font-weight-normal">Nama Dosen</label>
                     <div class="col-md-9">
                         <select class="form-control" name="dosen_id" id="dosen_id">
-                            @foreach($dosen as $key)
-                                <option {{ old('dosen_id') == $key->id ? 'selected' : null }} value="{{ $key->id }}">{{ $key->nama }}</option>
+                            @foreach ($dosen as $key)
+                                <option {{ old('dosen_id') == $key->id ? 'selected' : null }} value="{{ $key->id }}">
+                                    {{ $key->user->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -62,14 +63,15 @@
                     <label for="mahasiswa_id" class="col-sm-3 col-form-label font-weight-normal">Nama Mahasiswa</label>
                     <div class="col-md-9">
                         <select class="form-control" name="mahasiswa_id" id="mahasiswa_id">
-                            @foreach($mahasiswa as $key)
-                                <option {{ old('mahasiswa_id') == $key->id ? 'selected' : null }} value="{{ $key->id }}">{{ $key->nama }}</option>
+                            @foreach ($mahasiswa as $key)
+                                <option {{ old('mahasiswa_id') == $key->id ? 'selected' : null }}
+                                    value="{{ $key->id }}">{{ $key->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                <button class="btn btn-success" type="submit">Submit</button>
+                    <button class="btn btn-success" type="submit">Submit</button>
                 </div>
             </div>
         </div>
@@ -87,7 +89,6 @@
     <!-- Moment -->
     <script src="/plugins/moment/moment.min.js"></script>
     <script>
-
         $(document).ready(function() {
 
             let pwd = true

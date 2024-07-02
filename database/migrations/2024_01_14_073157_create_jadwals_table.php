@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->string('pertemuan');
-            $table->string('kelas');
-            $table->date('tanggal');
-            $table->string('jam');
-            $table->string('keterangan')->default('Menunggu');
-            $table->unsignedBigInteger('matkul_id');
-            $table->unsignedBigInteger('dosen_id');
-            $table->unsignedBigInteger('mahasiswa_id');
+            $table->string('kelas')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->string('jam')->nullable();
+            $table->string('keterangan')->default('Menunggu')->nullable();
+            $table->foreignId('matkul_id')->constrained('matkuls')->onDelete('cascade');
+            $table->foreignId('dosen_id')->constrained('dosen')->onDelete('cascade');
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade');
             $table->timestamps();
         });
     }

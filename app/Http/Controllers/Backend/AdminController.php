@@ -41,7 +41,7 @@ class AdminController extends Controller
     public function showDosen($id)
     {
         $dosen = Dosen::findOrFail($id);
-        return view('admin.dosen.show', [
+        return view('admin.dosen.new.index', [
             'dosen' => $dosen
         ]);
     }

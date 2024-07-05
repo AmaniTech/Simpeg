@@ -172,7 +172,7 @@ class DosenController extends Controller
         $pendidikan->tahun_keluar = $request->tahun_keluar;
         $pendidikan->save();
 
-        return redirect()->route('dosen.profile', ['id' => $id])->with('success', 'Riwayat penelitian berhasil diperbarui.');
+        return redirect('/dosen/profile')->with('success', 'Riwayat penelitian berhasil diperbarui.');
     }
 
     public function deleteJabatan($id, $jabatanId)

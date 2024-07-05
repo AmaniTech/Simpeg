@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('kelas')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('jam')->nullable();
+            $table->text('materi_dosen')->nullable();
+            $table->text('materi_mhs')->nullable();
+            $table->integer('jml_mhs')->nullable();
+            $table->integer('jml_mhs_masuk')->nullable();
             $table->string('keterangan')->default('Menunggu')->nullable();
             $table->foreignId('matkul_id')->constrained('matkuls')->onDelete('cascade');
             $table->foreignId('dosen_id')->constrained('dosen')->onDelete('cascade');

@@ -56,4 +56,8 @@ class Dosen extends Model
     {
         return $this->hasMany(JabFungsional::class);
     }
+    public function penelitian_luaran()
+    {
+        return $this->hasMany(PenLuaran::class);
+    }
 }

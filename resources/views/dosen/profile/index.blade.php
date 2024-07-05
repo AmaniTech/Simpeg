@@ -94,6 +94,10 @@
             @include('dosen.profile.jabatan_fungsional')
             {{-- end jabatan fungsional --}}
 
+            {{-- penelitian luaran --}}
+            @include('dosen.profile.penelitian_luaran')
+            {{-- end penelitian luaran --}}
+
             {{-- jurnal --}}
             @include('dosen.profile.jurnal')
             {{-- end jurnal --}}

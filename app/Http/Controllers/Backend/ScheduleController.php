@@ -22,23 +22,6 @@ class ScheduleController extends Controller
         ]);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $matkul = Matkul::get(['id', 'nama_matkul']);
-        $dosen = Dosen::get(['id', 'nama']);
-        return view('dosen.schedule.create', [
-            'matkul' => $matkul,
-            'dosen' => $dosen
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -91,7 +74,15 @@ class ScheduleController extends Controller
     public function update(Request $request, string $id)
     {
         $jadwal = Jadwal::findOrFail($id);
-        $jadwal->update($request->all());
+        $jadwal->update([
+            'pertemuan' => $request->pertemuan,
+            'kelas' => $request->kelas,
+            'tanggal'  => $request->tanggal,
+            'jam' => $request->jam,
+            'materi_dosen' => $request->materi_dosen,
+            'jml_mhs' => $request->jml_mhs,
+            'jml_mhs_masuk' => $request->jml_mhs_masuk
+        ]);
 
         toastr()->success('Jadwal berhasil diperbarui.');
         return \redirect()->route('dosen.schedule');

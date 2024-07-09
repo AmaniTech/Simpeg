@@ -4,14 +4,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">List</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('schedule.create') }}" class="btn btn-primary bg-info btn-tool"
-                            id="btn-create">Tambah
-                            Jadwal</a>
-                    </div>
-                </div>
                 <section id="loading">
                     <div class="centered">
                         <div id="divSpinner" class="spinner loading">
@@ -21,8 +13,6 @@
                 </section>
 
                 <div class="card-body p-2">
-                    {{-- <p class="text-center text-secondary my-3" id="nodataDevice">Gateway before managing Devices</p>
-                --}}
                     <div class="table-responsive" id="dt-container" style="overflow-x: auto;">
                         <table id="dt" class="table table-bordered table-hover">
                             <thead>
@@ -32,7 +22,7 @@
                                     <th>TANGGAL</th>
                                     <th>JAM</th>
                                     <th>Mata Kuliah</th>
-                                    <th>Keterangan</th>
+                                    <th>Penanggung Jawab Absensi</th>
                                     <th style="width:150px;">Action</th>
                                 </tr>
                             </thead>
@@ -44,7 +34,7 @@
                                         <td class="x-grid-cell-inner">{{ $value->tanggal ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->jam ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
-                                        <td class="x-grid-cell-inner">{{ $value->keterangan ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">{{ $value->mahasiswa->user->name ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">
                                             <div class="row">
                                                 <a href="{{ route('schedule.edit', $value->id) }}"

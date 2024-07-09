@@ -86,7 +86,6 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
 
     /** Jadwal Prefix */
     Route::get('dosen/schedule', [ScheduleController::class, 'index'])->name('dosen.schedule');
-    Route::get('dosen/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::patch('dosen/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.updates');
     Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');

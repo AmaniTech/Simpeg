@@ -44,13 +44,34 @@
 
                 <div class="form-group row border-bottom pb-4">
                     <label for="matkul_id" class="col-sm-3 col-form-label font-weight-normal">Nama Matkul</label>
-                    <div class="col-md-9">
-                        <select class="form-control" name="matkul_id" id="matkul_id">
-                            @foreach ($matkul as $key)
-                                <option {{ $jadwal->matkul_id == $key->id ? 'selected' : '' }} value="{{ $key->id }}">
-                                    {{ $key->nama_matkul }}</option>
-                            @endforeach
-                        </select>
+                    <div class="col-md-2">
+                        <p>{{ $jadwal->matkul->nama_matkul }}</p>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom pb-4">
+                    <label for="matkul_id" class="col-sm-3 col-form-label font-weight-normal">Penanggung Jawab Absensi</label>
+                    <div class="col-md-2">
+                        <p>{{ $jadwal->mahasiswa->user->name }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="jam" class="col-sm-3 col-form-label font-weight-normal">Jumlah Mahasiswa</label>
+                    <div class="col-md-2">
+                        <input type="number" name="jml_mhs" class="form-control"
+                            value="{{ $jadwal->jml_mhs }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="jam" class="col-sm-3 col-form-label font-weight-normal">Jumlah Mahasiswa Masuk</label>
+                    <div class="col-md-2">
+                        <input type="number" name="jml_mhs_masuk" class="form-control"
+                            value="{{ $jadwal->jml_mhs_masuk }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="jam" class="col-sm-3 col-form-label font-weight-normal">Materi</label>
+                    <div class="col-md-2">
+                        <textarea name="materi_dosen" cols="130" rows="10">{{ $jadwal->materi_dosen }}</textarea>
                     </div>
                 </div>
                 <div class="card-footer text-right">
@@ -64,28 +85,4 @@
     <link rel="stylesheet" href="{{ url('plugins/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 
-@section('page-js')
-    <script src="/js/xhr-helper.js"></script>
-    <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
-    <!-- Moment -->
-    <script src="/plugins/moment/moment.min.js"></script>
-    <script>
-        $(document).ready(function() {
 
-            let pwd = true
-            $('#togglepwd').click(function() {
-                if (pwd) {
-                    pwd = false
-                    $('input[name="password"]').attr('type', 'text')
-                    $('#togglepwd span').removeClass("fa-eye")
-                    $('#togglepwd span').addClass("fa-eye-slash")
-                } else {
-                    pwd = true
-                    $('input[name="password"]').attr('type', 'password')
-                    $('#togglepwd span').removeClass("fa-eye-slash")
-                    $('#togglepwd span').addClass("fa-eye")
-                }
-            })
-        })
-    </script>
-@endsection

@@ -1,42 +1,15 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Management Jadwal</h3>
-    </div>
-    <div class="card-body">
-
-    </div>
-</div>
 <div class="row">
-    {{-- <div class="col-4">
-        <div class="card card-outline card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Gateways</h3>
-                <div class="card-tools">
-                    <button class="btn btn-tool btn-icon text-primary" id="btnAddGw" disabled><i
-                            class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="card-body p-2">
-                <p class="text-center text-secondary my-3" id="nodataGw">No data available</p>
-                <div class="list-group list-group-flush" id="listGw"></div>
-            </div>
-        </div>
-    </div> --}}
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
                 <h3 class="card-title">List</h3>
-
-                @if(auth()->user()->role === 'admin')
-                    <div class="card-tools">
-                        <a href="{{ route('jadwal.create') }}" class="btn btn-primary bg-info btn-tool" id="btn-create">Tambah
-                        Jadwal</a>
-                    </div>
-                @endif
-
+                <div class="card-tools">
+                    <a href="{{ route('jadwal.create') }}" class="btn btn-primary bg-info btn-tool" id="btn-create">Tambah
+                    Jadwal</a>
+                </div>
             </div>
             <section id="loading">
                 <div class="centered">
@@ -47,8 +20,6 @@
             </section>
 
             <div class="card-body p-2">
-                {{-- <p class="text-center text-secondary my-3" id="nodataDevice">Gateway before managing Devices</p>
-                --}}
                 <div class="table-responsive" id="dt-container" style="overflow-x: auto;">
                     <table id="dt" class="table table-bordered table-hover">
                         <thead>
@@ -71,7 +42,7 @@
                                 <td class="x-grid-cell-inner">{{ $value->tanggal ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->jam ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
-                                <td class="x-grid-cell-inner">{{ $value->dosen->nama ?? '-' }}</td>
+                                <td class="x-grid-cell-inner">{{ $value->dosen->user->name ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->mahasiswa->nama ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">
                                     <div class="row">
@@ -81,7 +52,7 @@
                                             @method('delete')
                                             <button type="submit" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></button>
                                         </form>
-                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

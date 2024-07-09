@@ -7,7 +7,6 @@ use App\Models\Jadwal;
 use App\Models\Matkul;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +18,7 @@ class JadwalController extends Controller
     public function index()
     {
         $jadwal = Jadwal::sortByTanggal()->with(['matkul', 'dosen'])->get();
-        return view('dosen.jadwal.index', [
+        return view('admin.jadwal.index', [
             'pageTitle' => 'Jadwal',
             'jadwal' => $jadwal
         ]);

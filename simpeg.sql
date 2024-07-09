@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 03, 2024 at 03:41 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Jul 09, 2024 at 09:10 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,7 +46,7 @@ CREATE TABLE `dosen` (
 --
 
 INSERT INTO `dosen` (`id`, `nidn`, `nis`, `alamat`, `prodi`, `jenjang`, `gelar`, `tahun_masuk`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'jakwdjaw', 'ajawdh', 'awdawd', 'awdawd', 'S1', 'S.Kom', '2020', 2, '2024-07-02 03:56:15', '2024-07-02 04:02:07');
+(1, '242342', '3234234', 'awdawd', 'adwad', 'awdawd', 'awdawdaw', '12312', 5, '2024-07-08 23:59:17', '2024-07-09 00:06:52');
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE `jabatan_fungsional` (
 --
 
 INSERT INTO `jabatan_fungsional` (`id`, `jabatan`, `kepangkatan`, `golongan`, `sertifikat`, `tgl_sertifikasi`, `dosen_id`, `created_at`, `updated_at`) VALUES
-(1, 'adw', 'wawa', 'awdawd', 'setifikat/FiyF0e0amW2UupmPVlKWYI03L75JaP3bmW0D4oHR.pdf', '2024-07-02', 1, '2024-07-02 04:06:35', '2024-07-02 04:06:35');
+(2, 'Direktur', 'Epic', '2a', 'setifikat/M5a1PKPUQZdvDKGSqBAOKzmxGQg8zK4lhX78KpU1.pdf', '2024-07-09', 1, '2024-07-09 00:04:52', '2024-07-09 00:04:52');
 
 -- --------------------------------------------------------
 
@@ -135,6 +135,10 @@ CREATE TABLE `jadwals` (
   `kelas` varchar(255) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
   `jam` varchar(255) DEFAULT NULL,
+  `materi_dosen` text DEFAULT NULL,
+  `materi_mhs` text DEFAULT NULL,
+  `jml_mhs` int(11) DEFAULT NULL,
+  `jml_mhs_masuk` int(11) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT 'Menunggu',
   `matkul_id` bigint(20) UNSIGNED NOT NULL,
   `dosen_id` bigint(20) UNSIGNED NOT NULL,
@@ -142,13 +146,6 @@ CREATE TABLE `jadwals` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `jadwals`
---
-
-INSERT INTO `jadwals` (`id`, `pertemuan`, `kelas`, `tanggal`, `jam`, `keterangan`, `matkul_id`, `dosen_id`, `mahasiswa_id`, `created_at`, `updated_at`) VALUES
-(1, '1', 'A1', '2024-07-03', '06:20', 'Menunggu', 1, 1, 1, '2024-07-02 16:21:14', '2024-07-02 16:21:14');
 
 -- --------------------------------------------------------
 
@@ -163,15 +160,6 @@ CREATE TABLE `jurusans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `jurusans`
---
-
-INSERT INTO `jurusans` (`id`, `nama_jurusan`, `kode_jurusan`, `created_at`, `updated_at`) VALUES
-(1, 'Teknik Informatika', '991', '2024-07-02 04:19:28', '2024-07-02 04:20:09'),
-(2, 'RPL', '992', '2024-07-02 04:19:59', '2024-07-02 04:20:23'),
-(3, 'Teknik Elektro', '993', '2024-07-02 04:20:37', '2024-07-02 04:20:37');
 
 -- --------------------------------------------------------
 
@@ -196,7 +184,8 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`id`, `nim`, `nama`, `alamat`, `prodi`, `tahun_angkatan`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, '2055201001030', 'Qomarus Zamani', 'Lekok', 'Teknik Informatika', '2020', 3, '2024-07-02 03:56:35', '2024-07-02 03:57:00');
+(1, NULL, 'Qomarus Zamani', NULL, NULL, NULL, 2, '2024-07-08 23:57:30', '2024-07-08 23:57:30'),
+(2, NULL, 'Syeh Abdi Yoga Krishna', NULL, NULL, NULL, 3, '2024-07-08 23:58:05', '2024-07-08 23:58:05');
 
 -- --------------------------------------------------------
 
@@ -213,15 +202,6 @@ CREATE TABLE `matkuls` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `matkuls`
---
-
-INSERT INTO `matkuls` (`id`, `nama_matkul`, `sks`, `semester`, `jurusan_id`, `created_at`, `updated_at`) VALUES
-(1, 'Pemrograman Dasar', '3', '1', 1, '2024-07-02 16:15:02', '2024-07-02 16:15:02'),
-(2, 'Kalkulus', '3', '1', 1, '2024-07-02 16:15:23', '2024-07-02 16:15:23'),
-(3, 'Kecerdasan Buatan', '2', '4', 1, '2024-07-02 16:20:23', '2024-07-02 16:20:23');
 
 -- --------------------------------------------------------
 
@@ -255,7 +235,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2024_01_18_050137_create_gajis_table', 1),
 (14, '2024_06_16_161127_create_rpenelitian_table', 1),
 (15, '2024_06_25_034910_create_rpendidikan_table', 1),
-(16, '2024_07_01_022006_jabatan_fungsional', 1);
+(16, '2024_07_01_022006_jabatan_fungsional', 1),
+(17, '2024_07_05_063128_penelitian_luaran', 1);
 
 -- --------------------------------------------------------
 
@@ -268,6 +249,30 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penelitian_luaran`
+--
+
+CREATE TABLE `penelitian_luaran` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `dosen_id` bigint(20) UNSIGNED NOT NULL,
+  `penelitian` varchar(255) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `bukti_penelitian` varchar(255) DEFAULT NULL,
+  `surat_tugas` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `penelitian_luaran`
+--
+
+INSERT INTO `penelitian_luaran` (`id`, `dosen_id`, `penelitian`, `tanggal`, `bukti_penelitian`, `surat_tugas`, `created_at`, `updated_at`) VALUES
+(2, 1, 'Klasifikasi', '2024-07-09', 'bukti_penelitian/at7BycwR5uvr1gN4sQe9RynKe5CumFf5XaqI2eK1.pdf', 'surat_tugas/tiyMPXuqCKdy98la4bNpj5zw9Dsd66pLTEbvaQgF.pdf', '2024-07-09 00:05:04', '2024-07-09 00:05:04');
 
 -- --------------------------------------------------------
 
@@ -309,7 +314,8 @@ CREATE TABLE `rjabatans` (
 --
 
 INSERT INTO `rjabatans` (`id`, `dosen_id`, `nama_jabatan`, `tahun_awal`, `tahun_akhir`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Dosen', '2020', '2021', '2024-07-02 04:06:21', '2024-07-02 04:06:21');
+(1, 1, 'Kepala Bagian', '2020', '2020', '2024-07-09 00:01:45', '2024-07-09 00:01:45'),
+(2, 1, 'dwadaw', '2131', '1231', '2024-07-09 00:01:52', '2024-07-09 00:01:52');
 
 -- --------------------------------------------------------
 
@@ -333,7 +339,9 @@ CREATE TABLE `rpendidikan` (
 --
 
 INSERT INTO `rpendidikan` (`id`, `dosen_id`, `nama_institusi`, `jenjang`, `tahun_masuk`, `tahun_keluar`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Unmerpasuruan', 'S1', '2020', '2024', '2024-07-02 04:06:12', '2024-07-02 04:06:12');
+(1, 1, 'SMAN 1 Grati', 'SMA', '2017', '2020', '2024-07-09 00:00:51', '2024-07-09 00:00:51'),
+(2, 1, 'Unmerpas', 'S1', '2020', '2024', '2024-07-09 00:01:04', '2024-07-09 00:01:04'),
+(3, 1, 'ITS', 'S2', '2024', '2026', '2024-07-09 00:01:25', '2024-07-09 00:01:25');
 
 -- --------------------------------------------------------
 
@@ -358,7 +366,7 @@ CREATE TABLE `rpenelitian` (
 --
 
 INSERT INTO `rpenelitian` (`id`, `dosen_id`, `judul_penelitian`, `tahun_penelitian`, `bukti_penelitian`, `penerbit`, `sinta`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Klasifikasi Kelulusan Mahasiswa', '2020', 'https://youtube.com/?hl=id', 'Muzan', 'SInta 1', '2024-07-02 04:06:57', '2024-07-02 04:06:57');
+(1, 1, 'Klasifikasi Saham', '2020', 'link', 'Gramedia', 'Sinta 1', '2024-07-09 00:05:45', '2024-07-09 00:05:45');
 
 -- --------------------------------------------------------
 
@@ -401,9 +409,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `image`, `phone`, `email`, `role`, `status`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin', NULL, NULL, 'admin@gmail.com', 'admin', 'active', NULL, '$2y$12$hpOyZv4L/VdFDJDb7Q/usOOlGG8kvWB8ADw8ucyEVof1KLJarZ.Wm', NULL, NULL, NULL),
-(2, 'Dosen 1', 'dosen1', NULL, '088103610246', 'dosen1@gmail.com', 'dosen', 'active', NULL, '$2y$12$MAkZQ2mcog38d/dk152VgOfizEqHGtN7Sc3X2/qXGH6UIUPxSAxOa', NULL, '2024-07-02 03:56:15', '2024-07-02 03:56:15'),
-(3, 'Qomarus Zamani', 'qomarus', NULL, '088103610246', 'qomaruszamani24@gmail.com', 'mahasiswa', 'active', NULL, '$2y$12$zL17kwQsbJg.Az3anVebBuaClvEane.jogmSEX39fG1Vhh8auOUpK', NULL, '2024-07-02 03:56:35', '2024-07-02 03:56:35');
+(1, 'Admin', 'admin', '/uploads/1480746068_LPPM.png', NULL, 'admin@gmail.com', 'admin', 'active', NULL, '$2y$12$CJAIpEEeCIr8W2R/pechneQ5GqXEjiJA8.KimrdD9xOiygI9k33w.', NULL, NULL, '2024-07-09 00:10:14'),
+(2, 'Qomarus Zamani', 'qomarus', NULL, '23423423', 'qomarus@gmail.com', 'mahasiswa', 'active', NULL, '$2y$12$JwGn0gQpqXgjMs7ZaV/gtu33zoSRir0.Ak8SWKjt5HVyqzGHJazMS', NULL, '2024-07-08 23:57:30', '2024-07-08 23:57:30'),
+(3, 'Syeh Abdi Yoga Krishna', 'Yoga', NULL, '324234', 'yoga@gmail.com', 'mahasiswa', 'active', NULL, '$2y$12$ca.yvvFgbEfJlBW/v2Db8eM4H2Beq4f6zXl6HZ44Jbb4J19Nk4UKK', NULL, '2024-07-08 23:58:05', '2024-07-08 23:58:05'),
+(5, 'dosen1', 'dosen1', '/uploads/961508800_pngtree-view-of-the-kaaba-building-picture-image_2671766.jpg', '234234', 'dosen1@gmail.com', 'dosen', 'active', NULL, '$2y$12$3xBTPrN2pCuJiyJ./WC6lebLeL.boUyqhnAqsCVjghpVAdVSC2.X2', NULL, '2024-07-08 23:59:17', '2024-07-09 00:07:09');
 
 --
 -- Indexes for dumped tables
@@ -483,6 +492,13 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `penelitian_luaran`
+--
+ALTER TABLE `penelitian_luaran`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `penelitian_luaran_dosen_id_foreign` (`dosen_id`);
+
+--
 -- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -554,37 +570,43 @@ ALTER TABLE `gajis`
 -- AUTO_INCREMENT for table `jabatan_fungsional`
 --
 ALTER TABLE `jabatan_fungsional`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jadwals`
 --
 ALTER TABLE `jadwals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jurusans`
 --
 ALTER TABLE `jurusans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `matkuls`
 --
 ALTER TABLE `matkuls`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `penelitian_luaran`
+--
+ALTER TABLE `penelitian_luaran`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -596,13 +618,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `rjabatans`
 --
 ALTER TABLE `rjabatans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rpendidikan`
 --
 ALTER TABLE `rpendidikan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rpenelitian`
@@ -620,7 +642,7 @@ ALTER TABLE `sks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -651,6 +673,12 @@ ALTER TABLE `jadwals`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `penelitian_luaran`
+--
+ALTER TABLE `penelitian_luaran`
+  ADD CONSTRAINT `penelitian_luaran_dosen_id_foreign` FOREIGN KEY (`dosen_id`) REFERENCES `dosen` (`id`);
 
 --
 -- Constraints for table `rpenelitian`

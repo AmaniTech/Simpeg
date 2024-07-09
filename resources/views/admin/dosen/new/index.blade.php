@@ -43,6 +43,10 @@
             @include('admin.dosen.new.jabatan_fungsional')
             {{-- end jabatan fungsional --}}
 
+            {{-- penelitian luaran --}}
+            @include('admin.dosen.new.penelitian_luaran')
+            {{-- end penelitian luaran --}}
+
             {{-- jurnal --}}
             @include('admin.dosen.new.jurnal')
             {{-- end jurnal --}}

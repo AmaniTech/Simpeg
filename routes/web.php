@@ -89,7 +89,6 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::patch('dosen/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.updates');
     Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
-    Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
 
     Route::get('dosen/gaji', [GajiController::class, 'gajiSaya'])->name('dosen.gaji');
     Route::get('dosen/profile', [DosenController::class, 'profile'])->name('dosen.profile');

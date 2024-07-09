@@ -91,12 +91,4 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        $jadwal = Jadwal::where('id', $id)->first();
-        $jadwal->delete();
-
-        toastr()->success('Jadwal berhasil dihapus');
-        return \redirect()->route('dosen.schedule');
-    }
 }

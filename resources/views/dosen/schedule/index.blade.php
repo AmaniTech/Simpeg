@@ -40,15 +40,6 @@
                                                 <a href="{{ route('schedule.edit', $value->id) }}"
                                                     class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip"
                                                     title="Edit"><i class="fa fa-edit"></i></a>
-                                                <form method="post"
-                                                    onsubmit="return confirm('Hapus Data atas nama {{ $value->dosen->nama }}?');"
-                                                    action="{{ route('schedule.delete', $value->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        data-toggle="tooltip" title="Hapus"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </form>
                                             </div>
                                         </td>
                                     </tr>

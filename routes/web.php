@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Dosen\JbtFungsionalController;
 use App\Http\Controllers\PenelitianLuaranController;
+use App\Http\Controllers\SettingController;
 
 Route::middleware('guest')->group(function () {
     // Route::get('register', [RegisteredUserController::class, 'create'])
@@ -214,4 +215,10 @@ Route::group(["middleware" => 'role:admin'], function () {
     Route::patch('admin/gaji/edit/{id}', [GajiController::class, 'update'])->name('gaji.updates');
     Route::get('/gaji/edit/{id}', [GajiController::class, 'edit'])->name('gaji.edit');
     Route::delete('/gaji/{id}', [GajiController::class, 'destroy'])->name('gaji.delete');
+
+
+    // setting
+    Route::get('setting', [SettingController::class, 'index']);
+    Route::post('/set/setting', [SettingController::class, 'update']);
+    // end setting
 });

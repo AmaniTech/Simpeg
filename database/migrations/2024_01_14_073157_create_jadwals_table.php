@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('materi_mhs')->nullable();
             $table->integer('jml_mhs')->nullable();
             $table->integer('jml_mhs_masuk')->nullable();
-            $table->string('keterangan')->default('Menunggu')->nullable();
+            $table->integer('gaji')->nullable();
             $table->foreignId('matkul_id')->constrained('matkuls')->onDelete('cascade');
             $table->foreignId('dosen_id')->constrained('dosen')->onDelete('cascade');
             $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade');

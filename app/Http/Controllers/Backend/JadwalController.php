@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use App\Models\Matkul;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -133,15 +134,17 @@ class JadwalController extends Controller
     {
         $jadwal = Jadwal::where('id', $id)
             ->firstOrFail();
-        $matkul = Matkul::get(['id', 'nama_matkul']);
-        $dosen = Dosen::get(['id', 'nama']);
-        $mahasiswa = Mahasiswa::get(['id', 'nama']);
-        return view('admin.matkul.edit', [
+        $matkul = Matkul::all();
+        $dosen = Dosen::all();
+        $mahasiswa = Mahasiswa::all();
+        // return $matkul;
+        return view('admin.jadwal.edit', [
             'pageTitle' => 'Edit Jadwal',
             'jadwal' => $jadwal,
             'matkul' => $matkul,
             'dosen'   =>  $dosen,
-            'mahasiswa' => $mahasiswa
+            'mahasiswa' => $mahasiswa,
+            'jurusan' => Jurusan::all()
         ]);
     }
 
@@ -150,21 +153,18 @@ class JadwalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'pertemuan' => 'required',
-            'kelas' => 'required',
-            'tanggal' => 'required|date',
-            'jam' => 'required',
-            'matkul_id' => 'required|exists:matkuls,id',
-            'dosen_id' => 'required|exists:dosens,id',
-            'mahasiswa_id' => 'required|exists:mahasiswa,id',
+        $jadwal = Jadwal::findOrFail($id)->update([
+            'pertemuan' => $request->pertemuan,
+            'matkul_id'=> $request->matkul_id,
+            'tanggal'=> $request->tanggal,
+            'jam' => $request->jam,
+            'dosen_id'=> $request->dosen_id,
+            'mahasiswa_id'=> $request->mahasiswa_id
         ]);
 
-        $jadwal = Jadwal::findOrFail($id);
-        $jadwal->update($request->all());
 
         toastr()->success('Jadwal berhasil diperbarui.');
-        return \redirect()->route('dosen.jadwal');
+        return redirect()->route('dosen.jadwal');
     }
 
     /**

@@ -24,7 +24,7 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Dosen::class,'dosen_id');
     }
-    
+
     public function mahasiswa()
     {
         return $this->belongsTo(Mahasiswa::class,'mahasiswa_id');

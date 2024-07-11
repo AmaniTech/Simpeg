@@ -66,14 +66,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('admin.gaji') }}" class="nav-link">
-                <i class="nav-icon fas fa-wallet"></i>
-                <p>
-                    Lihat Gaji
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
             <a href="{{ route('admin.dosen') }}" class="nav-link">
                 <i class="nav-icon fas fa-user-graduate"></i>
                 <p>

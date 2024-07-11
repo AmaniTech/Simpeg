@@ -166,6 +166,13 @@ class GajiController extends Controller
 
         $jadwals = Jadwal::whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])->sum('honor');
 
+        $hargaMinimalSks = Setting::where('variabel', 'min_sks')->value('value') * Setting::where('variabel', 'hargapersks')->value('value');
+
+        $final = $jadwals - $hargaMinimalSks;
+
+        if ($final < 0) {
+            return redirect()->back()->with('Gaji', '-');
+        }
 
         return redirect()->back()->with('Gaji', $jadwals);
     }

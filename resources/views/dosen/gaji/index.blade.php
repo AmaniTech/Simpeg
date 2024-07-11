@@ -27,7 +27,7 @@
         <div class="col-6">
             @if(session('Gaji'))
                 <div class="alert alert-success">
-                    Gaji: Rp. {{ session('Gaji') }}
+                    Total Gaji: Rp. {{ session('Gaji') }}
                 </div>
             @endif
         </div>

@@ -33,9 +33,12 @@
                                 <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->dosen->user->name ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">
-                                    <div class="row">
-                                        <a href="{{ route('mahasiswa.schedule.edit', $value->id) }}" class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+                                    @if(empty($value->materi_mhs))
+                                        <div class="row">
+                                            <a href="{{ route('mahasiswa.schedule.edit', $value->id) }}" class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                         </div>
+                                    @endif
+
                                 </td>
                             </tr>
                             @endforeach

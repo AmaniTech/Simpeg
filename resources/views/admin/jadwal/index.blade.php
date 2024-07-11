@@ -31,6 +31,7 @@
                                 <th>Mata Kuliah</th>
                                 <th>Nama Dosen</th>
                                 <th>Penanggung Jawab Absensi</th>
+                                <th>Status</th>
                                 <th style="width:150px;">Action</th>
                             </tr>
                         </thead>
@@ -44,6 +45,13 @@
                                 <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->dosen->user->name ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->mahasiswa->nama ?? '-' }}</td>
+                                <td class="x-grid-cell-inner">
+                                    @if(!empty($value->materi_dosen) && !empty($value->materi_mhs))
+                                        <span class="badge badge-success">Valid</span>
+                                    @else
+                                        <span class="badge badge-danger">Belum Valid</span>
+                                    @endif
+                                </td>
                                 <td class="x-grid-cell-inner">
                                     <div class="row">
                                         <a href="{{ route('jadwal.edit', $value->id) }}" class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>

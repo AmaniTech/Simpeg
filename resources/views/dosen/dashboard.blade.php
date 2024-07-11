@@ -14,7 +14,7 @@
             <div class="icon">
                 <i class="nav-icon fas fa-building"></i>
             </div>
-            <a href="{{route("admin.dosen")}}" class="small-box-footer pb-2">Manage <i
+            <a href="/dosen/schedule" class="small-box-footer pb-2">Manage <i
                     class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>

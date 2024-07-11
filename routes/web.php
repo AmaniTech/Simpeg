@@ -90,7 +90,12 @@ Route::group(['auth', "middleware" => 'role:dosen'], function () {
     Route::patch('dosen/schedule/edit/{id}', [ScheduleController::class, 'update'])->name('schedule.updates');
     Route::get('/schedule/edit/{id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
 
+    // perhitungan gaji
     Route::get('dosen/gaji', [GajiController::class, 'gajiSaya'])->name('dosen.gaji');
+    Route::get('/per/gaji', [GajiController::class, 'perhitungan']);
+    // end perhitungan gaji
+
+
     Route::get('dosen/profile', [DosenController::class, 'profile'])->name('dosen.profile');
     Route::get('/dosen/{id}/rjabatan/create', [DosenController::class, 'createJabatan'])->name('dosen.profile.createJabatan');
     Route::get('/dosen/{id}/rpenelitian/create', [DosenController::class, 'createPenelitian'])->name('dosen.profile.createPenelitian');
@@ -126,7 +131,7 @@ Route::group(['auth', "middleware" => 'role:mahasiswa'], function () {
 
     //Schedule
     Route::get('mahasiswa/schedule', [JadwalController::class, 'schedule'])->name('mahasiswa.schedule');
-    Route::get('mahasiswa/schedule/edit{id}', [JadwalController::class, 'ubah'])->name('mahasiswa.schedule.edit');
+    Route::get('mahasiswa/schedule/edit/{id}', [JadwalController::class, 'ubah'])->name('mahasiswa.schedule.edit');
     Route::patch('mahasiswa/schedule/update/{id}', [JadwalController::class, 'updateKeterangan'])->name('mahasiswa.schedule.updates');
 });
 

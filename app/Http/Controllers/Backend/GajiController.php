@@ -8,6 +8,7 @@ use App\Models\Gaji;
 use App\Models\Dosen;
 use App\Models\Jadwal;
 use App\Models\Matkul;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
@@ -27,33 +28,9 @@ class GajiController extends Controller
 
     public function gajiSaya()
     {
-        // $user = Auth::user();
-
-        // if ($user->role !== 'dosen') {
-        //     abort(403, 'Unauthorized action.');
-        // }
-        // $gajis = Gaji::where('dosen_id', $user->id)->get();
-
-        // Ambil data gaji berdasarkan dosen yang sedang login
-        $user = Auth::user();
-
-        if ($user->role !== 'dosen') {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $dosen = $user->dosen()->with(['gaji'])->first();
-
-        $totalSks = Jadwal::where('dosen_id', $dosen->id)
-        ->where('keterangan', 'valid')
-        ->join('matkuls', 'jadwals.matkul_id', '=', 'matkuls.id')
-        ->sum('matkuls.sks');
-
         return view('dosen.gaji.index', [
-            'gaji' => $dosen->gaji,
-            'dosen' => $dosen,
-            'user' => $user,
-            'totalSks' => $totalSks
-            // 'user' => $user
+            'minimal_sks' => Setting::where('variabel', 'min_sks')->value('value'),
+            'hargapersks' => Setting::where('variabel', 'hargapersks')->value('value')
         ]);
     }
 
@@ -180,5 +157,16 @@ class GajiController extends Controller
 
         toastr()->success('Jadwal berhasil dihapus');
         return \redirect()->route('admin.gaji');
+    }
+
+    public function perhitungan(Request $request)
+    {
+        $tanggal_awal = $request->input('tgl_awal');
+        $tanggal_akhir = $request->input('tgl_akhir');
+
+        $jadwals = Jadwal::whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])->sum('honor');
+
+
+        return redirect()->back()->with('Gaji', $jadwals);
     }
 }

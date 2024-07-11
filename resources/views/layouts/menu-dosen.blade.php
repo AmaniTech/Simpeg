@@ -29,7 +29,7 @@
             <a href="{{ route('dosen.gaji') }}" class="nav-link">
                 <i class="nav-icon fas fa-building"></i>
                 <p>
-                    Perhitungan
+                    Perhitungan Gaji
                 </p>
             </a>
         </li>

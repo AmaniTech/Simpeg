@@ -8,6 +8,7 @@ use App\Models\Matkul;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use App\Models\Jurusan;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,12 +36,12 @@ class JadwalController extends Controller
     }
 
 
-    public function ubah(string $id)
+    public function ubah($id)
     {
         $jadwal = Jadwal::where('id', $id)
             ->firstOrFail();
         $matkul = Matkul::get(['id', 'nama_matkul']);
-        $dosen = Dosen::get(['id', 'nama']);
+
         $mahasiswa = Mahasiswa::get(['id', 'nama']);
         $user = Auth::user();
         \Log::info('User ID: ' . $user->id);
@@ -54,31 +55,35 @@ class JadwalController extends Controller
             return redirect()->route('mahasiswa.schedule')->with('error', 'Anda tidak memiliki izin untuk mengedit jadwal ini.');
         }
         return view('mahasiswa.schedule.edit', [
-            'pageTitle' => 'Validasi Keterangan',
+            'pageTitle' => 'Detail',
             'jadwal' => $jadwal,
             'matkul' => $matkul,
-            'dosen'   =>  $dosen,
             'mahasiswa' => $mahasiswa,
             'user' => $user
         ]);
     }
 
-    public function updateKeterangan(Request $request, string $id)
+    public function updateKeterangan(Request $request, $id)
     {
-        $request->validate([
-            'keterangan' => 'required|string|max:255',
-        ]);
+        $sks = Jadwal::with('matkul')->where('id', $id)->first();
+        $hargapersks = Setting::where('variabel', 'hargapersks')->value('value');
 
-        $jadwal = Jadwal::findOrFail($id);
-        $user = Auth::user();
-        if ($jadwal->mahasiswa_id != $user->mahasiswa->id) {
-            return redirect()->route('mahasiswa.schedule')->with('error', 'Anda tidak memiliki izin untuk mengedit jadwal ini.');
+        $nilaiSks = $sks->matkul->sks * $hargapersks;
+
+        if (!empty($request->materi_mhs)) {
+
+            $jadwal = Jadwal::findOrFail($id)->update([
+                'materi_mhs' => $request->materi_mhs,
+                'honor' => $nilaiSks
+            ]);
+
+            toastr()->success('Keterangan telah diperbarui.');
+            return \redirect()->route('mahasiswa.schedule');
+        }else{
+            // kosongan
+           toastr()->success('Keterangan telah diperbarui.');
+           return \redirect()->route('mahasiswa.schedule');
         }
-
-        $jadwal->update($request->all());
-
-        toastr()->success('Keterangan telah diperbarui.');
-        return \redirect()->route('mahasiswa.schedule');
     }
 
     /**

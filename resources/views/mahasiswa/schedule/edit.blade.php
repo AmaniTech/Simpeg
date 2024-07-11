@@ -7,17 +7,14 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    Validasi Jadwal
+                    Mata Kuliah : {{$jadwal->matkul->nama_matkul}}
                 </h3>
             </div>
             <div class="card-body">
                 <div class="form-group row">
-                    <label for="keterangan" class="col-sm-3 col-form-label font-weight-normal">Validasi Keterangan</label>
+                    <label for="keterangan" class="col-sm-3 col-form-label font-weight-normal">Materi Mata Kuliah</label>
                     <div class="col-md-9">
-                        <select id="keterangan" name="keterangan" class="form-control" required>
-                            <option value="Valid" {{ $jadwal->keterangan == 'Valid' ? 'selected' : '' }}>Valid</option>
-                            <option value="Menunggu" {{ $jadwal->keterangan == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                        </select>
+                        <textarea name="materi_mhs" cols="100" rows="10">{{$jadwal->materi_mhs}}</textarea>
                     </div>
                 </div>
 

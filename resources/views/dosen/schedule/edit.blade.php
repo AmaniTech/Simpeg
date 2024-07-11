@@ -71,7 +71,7 @@
                 <div class="form-group row">
                     <label for="jam" class="col-sm-3 col-form-label font-weight-normal">Materi</label>
                     <div class="col-md-2">
-                        <textarea name="materi_dosen" cols="130" rows="10">{{ $jadwal->materi_dosen }}</textarea>
+                        <textarea name="materi_dosen" cols="100" rows="10">{{ $jadwal->materi_dosen }}</textarea>
                     </div>
                 </div>
                 <div class="card-footer text-right">

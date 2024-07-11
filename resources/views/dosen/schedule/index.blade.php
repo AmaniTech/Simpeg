@@ -19,10 +19,12 @@
                                 <tr>
                                     <th width="30">No</th>
                                     <th>PERTEMUAN</th>
+                                    <th>KELAS</th>
                                     <th>TANGGAL</th>
                                     <th>JAM</th>
                                     <th>Mata Kuliah</th>
                                     <th>Penanggung Jawab Absensi</th>
+                                    <th>Status</th>
                                     <th style="width:150px;">Action</th>
                                 </tr>
                             </thead>
@@ -31,10 +33,18 @@
                                     <tr>
                                         <td class="x-grid-cell-inner">{{ $key + 1 }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->pertemuan ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">{{ $value->kelas ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->tanggal ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->jam ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
                                         <td class="x-grid-cell-inner">{{ $value->mahasiswa->user->name ?? '-' }}</td>
+                                        <td class="x-grid-cell-inner">
+                                            @if(!empty($value->materi_mhs))
+                                                 <span class="badge badge-success">Valid</span>
+                                            @else
+                                                 <span class="badge badge-danger">Belum Valid</span>
+                                            @endif
+                                        </td>
                                         <td class="x-grid-cell-inner">
                                             <div class="row">
                                                 <a href="{{ route('schedule.edit', $value->id) }}"

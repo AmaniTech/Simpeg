@@ -1,30 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Lihat Jadwal Kuliah</h3>
-    </div>
-    <div class="card-body">
 
-    </div>
-</div>
 <div class="row">
-    {{-- <div class="col-4">
-        <div class="card card-outline card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Gateways</h3>
-                <div class="card-tools">
-                    <button class="btn btn-tool btn-icon text-primary" id="btnAddGw" disabled><i
-                            class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="card-body p-2">
-                <p class="text-center text-secondary my-3" id="nodataGw">No data available</p>
-                <div class="list-group list-group-flush" id="listGw"></div>
-            </div>
-        </div>
-    </div> --}}
     <div class="col-12">
         <div class="card card-outline card-primary">
             <div class="card-header">
@@ -41,7 +19,6 @@
                                 <th>TANGGAL</th>
                                 <th>JAM</th>
                                 <th>Mata Kuliah</th>
-                                <th>Keterangan</th>
                                 <th>Nama Dosen</th>
                                 <th style="width:150px;">Action</th>
                             </tr>
@@ -54,8 +31,7 @@
                                 <td class="x-grid-cell-inner">{{ $value->tanggal ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->jam ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">{{ $value->matkul->nama_matkul ?? '-' }}</td>
-                                <td class="x-grid-cell-inner">{{ $value->keterangan ?? '-' }}</td>
-                                <td class="x-grid-cell-inner">{{ $value->dosen->nama ?? '-' }}</td>
+                                <td class="x-grid-cell-inner">{{ $value->dosen->user->name ?? '-' }}</td>
                                 <td class="x-grid-cell-inner">
                                     <div class="row">
                                         <a href="{{ route('mahasiswa.schedule.edit', $value->id) }}" class="btn btn-sm btn-outline-warning mx-2" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>

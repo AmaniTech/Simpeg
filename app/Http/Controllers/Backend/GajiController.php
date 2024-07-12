@@ -164,15 +164,30 @@ class GajiController extends Controller
         $tanggal_awal = $request->input('tgl_awal');
         $tanggal_akhir = $request->input('tgl_akhir');
 
-        $jadwals = Jadwal::whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])->sum('honor');
 
-        $hargaMinimalSks = Setting::where('variabel', 'min_sks')->value('value') * Setting::where('variabel', 'hargapersks')->value('value');
+        $jadwals = Jadwal::with('matkul')->selectRaw('kelas , matkul_id, dosen_id, MAX(id) as id')
+                ->groupBy('kelas', 'matkul_id', 'dosen_id')
+                ->get();
 
-        $final = $jadwals - $hargaMinimalSks;
 
-        if ($final < 0) {
-            return redirect()->back()->with('Gaji', '-');
-        }
+        $totalSks = $jadwals->sum(function($jadwal) {
+            return $jadwal->matkul->sks;
+        });
+
+        $min_sks = Setting::where('variabel', 'min_sks')->value('value');
+        $hargapersks = Setting::where('variabel', 'hargapersks')->value('value');
+
+        $patokan = ($totalSks - $min_sks) * $hargapersks;
+
+        $validKelas =
+            Jadwal::where('dosen_id', 1)
+            ->whereNotNull('materi_dosen')
+            ->whereNotNull('materi_mhs')
+            ->get();
+
+
+
+
 
         return redirect()->back()->with('Gaji', $jadwals);
     }

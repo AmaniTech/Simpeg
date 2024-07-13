@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('dosen_id')->references('id')->on('dosen');
             $table->string('judul_penelitian');
+            $table->string('penulis');
+            $table->enum('status_penulis', ['peneliti', 'anggota']);
+            $table->string('peran_penulis');
+            $table->boolean('status_korespondensi')->default(0);
             $table->string('tahun_penelitian');
             $table->string('bukti_penelitian');
             $table->string('penerbit')->nullable();

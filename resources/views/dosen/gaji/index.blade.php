@@ -1,22 +1,18 @@
 @extends('layouts.base')
 
 @section('content')
-
     <div class="row">
         <div class="col-6">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Perhitungan <i>(Min. Sks = {{$minimal_sks}} | (Harga Per Sks = Rp. {{$hargapersks}}))</i></h3>
+                    <h3 class="card-title">Perhitungan <i>(Min. Sks = {{ $minimal_sks }} | (Harga Per Sks = Rp.
+                            {{ $hargapersks }}))</i></h3>
                 </div>
                 <div class="card-body p-2">
                     <form action="/per/gaji">
                         <div class="form-group">
-                            <label for="tgl_awal">Tanggal Mulai</label>
-                            <input type="date" class="form-control" name="tgl_awal" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tgl_akhir">Tanggal Akhir</label>
-                            <input type="date" class="form-control" name="tgl_akhir" required>
+                            <label for="bulan">Bulan</label>
+                            <input type="month" class="form-control" name="bulan" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </form>
@@ -25,9 +21,35 @@
         </div>
 
         <div class="col-6">
-            @if(session('Gaji'))
+            @if (session('Gaji'))
+                @php
+                    $data = session('Gaji');
+
+                @endphp
                 <div class="alert alert-success">
-                    Total Gaji: Rp. {{ session('Gaji') }}
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama Matakuliah</th>
+                                <th>SKS</th>
+                                <th>Pertemuan Valid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data['matkul_dosen'] as $md)
+                                <tr>
+                                    <td>{{ $md->nama_matkul }}</td>
+                                    <td>{{ $md->total_sks }}</td>
+                                    <td>{{ $md->total_sks }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <th>Total Gaji</th>
+                                <td>{{ 'Rp.' . number_format($data['harga_total_pertemuan'], 2) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             @endif
         </div>

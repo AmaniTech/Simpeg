@@ -11,6 +11,7 @@ use App\Models\Matkul;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class GajiController extends Controller
 {
@@ -20,7 +21,7 @@ class GajiController extends Controller
     public function index()
     {
         $gaji = Gaji::with('dosen')->get();
-        return view('admin.gaji.index',[
+        return view('admin.gaji.index', [
             'pageTitle' => 'Gaji',
             'gaji' => $gaji
         ]);
@@ -39,45 +40,13 @@ class GajiController extends Controller
      */
     public function create()
     {
-        $dosen = Dosen::get(['id','nama']);
-        return view('admin.gaji.create',[
+        $dosen = Dosen::get(['id', 'nama']);
+        return view('admin.gaji.create', [
             'dosen' => $dosen
         ]);
     }
 
-    // public function hitungSalary($dosen_id)
-    // {
 
-    //     $data = $request->all();
-
-    //     // Hitung total SKS dari jadwal
-    //     $totalSks = Jadwal::where('dosen_id', $data['dosen_id'])
-    //         ->where('keterangan', 'valid')
-    //         ->join('matkuls', 'jadwals.matkul_id', '=', 'matkuls.id')
-    //         ->sum('matkuls.total_sks');
-
-    //     // Hitung total ngajar
-    //     $totalNgajar = $data['total_ngajar'];
-
-    //     // Hitung total gaji sesuai rumus
-    //     $totalGaji = ($totalNgajar - 4) / $data['jumlah_minggu'] * 3000 * $totalSks;
-
-    //     // Simpan data gaji baru ke database
-    //     Gaji::create([
-    //         'dosen_id' => $data['dosen_id'],
-    //         'total_ngajar' => $totalNgajar,
-    //         'minimal_mengajar' => $data['minimal_mengajar'],
-    //         'jumlah_minggu' => $data['jumlah_minggu'],
-    //         'honor_sks' => $totalGaji,
-    //     ]);
-
-    //     // Redirect ke halaman index dengan pesan sukses
-    //     return redirect()->route('gaji.index')->with('success', 'Gaji berhasil disimpan');
-    // }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -96,17 +65,13 @@ class GajiController extends Controller
             ->where('keterangan', 'Valid')
             ->count();
 
-        // $jumlahMingguDalamSatuBulan = (int) now()->endOfMonth()->format('W');
 
         $currentDate = Carbon::now();
         $startOfMonth = $currentDate->copy()->startOfMonth();
         $endOfMonth = $currentDate->copy()->endOfMonth();
         $totalDaysInMonth = $startOfMonth->diffInDays($endOfMonth) + 1;
         $jumlahMingguDalamSatuBulan = ceil($totalDaysInMonth / 7);
-        // Hitung total gaji sesuai rumus
-        // $totalGaji = ($totalNgajar - 4) / $data['jumlah_minggu'] * 3000 * $totalSks;
-        // $totalGaji = ($totalNgajar - 4) / ($jumlahMingguDalamSatuBulan * 3000 * $totalSks);
-        // $totalGaji = ($jumlahMingguDalamSatuBulan * 3000 * $totalSks) / ($totalNgajar - 4);
+
         $totalGaji = ($totalNgajar / $jumlahMingguDalamSatuBulan) * 30000 * $totalSks;
 
         // Simpan data gaji baru ke database
@@ -165,30 +130,33 @@ class GajiController extends Controller
         $tanggal_akhir = $request->input('tgl_akhir');
 
 
-        $jadwals = Jadwal::with('matkul')->selectRaw('kelas , matkul_id, dosen_id, MAX(id) as id')
-                ->groupBy('kelas', 'matkul_id', 'dosen_id')
-                ->get();
-
-
-        $totalSks = $jadwals->sum(function($jadwal) {
-            return $jadwal->matkul->sks;
-        });
-
         $min_sks = Setting::where('variabel', 'min_sks')->value('value');
         $hargapersks = Setting::where('variabel', 'hargapersks')->value('value');
 
-        $patokan = ($totalSks - $min_sks) * $hargapersks;
+        $dosenId = Dosen::where('user_id', Auth::user()->id)->value('id');
 
-        $validKelas =
-            Jadwal::where('dosen_id', 1)
-            ->whereNotNull('materi_dosen')
-            ->whereNotNull('materi_mhs')
+
+        $matkul_dosen = Jadwal::join('matkuls', 'matkuls.id', '=', 'jadwals.matkul_id')
+            ->where('dosen_id', $dosenId)
+            ->groupBy('matkul_id')
+            ->whereMonth('tanggal', Carbon::parse($request->bulan)->format('m'))
+            ->select('matkuls.nama_matkul', 'matkuls.sks', DB::raw('count(*) as jumlah_pertemuan'), DB::raw('matkuls.sks * 2 as total_sks'))
             ->get();
 
+        $patokan = ($matkul_dosen->sum('total_sks') * $hargapersks) - ($min_sks * $hargapersks);
+
+        $jumlah_semua_kelas_valid = Jadwal::where('dosen_id', $dosenId)
+            ->whereNotNull(['materi_dosen', 'materi_mhs'])
+            ->whereMonth('tanggal', Carbon::parse($request->bulan)->format('m'))
+            ->count();
+
+        $harga_total_pertemuan = ($jumlah_semua_kelas_valid * $patokan) / 16;
 
 
+        $data['harga_total_pertemuan'] = $harga_total_pertemuan;
+        $data['matkul_dosen'] = $matkul_dosen;
 
 
-        return redirect()->back()->with('Gaji', $jadwals);
+        return redirect()->back()->with('Gaji', $data);
     }
 }

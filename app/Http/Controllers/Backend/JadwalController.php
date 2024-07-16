@@ -68,13 +68,11 @@ class JadwalController extends Controller
         $sks = Jadwal::with('matkul')->where('id', $id)->first();
         $hargapersks = Setting::where('variabel', 'hargapersks')->value('value');
 
-        $nilaiSks = $sks->matkul->sks * $hargapersks;
 
         if (!empty($request->materi_mhs)) {
 
             $jadwal = Jadwal::findOrFail($id)->update([
                 'materi_mhs' => $request->materi_mhs,
-                'honor' => $nilaiSks
             ]);
 
             toastr()->success('Keterangan telah diperbarui.');

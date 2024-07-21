@@ -19,21 +19,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="penulis">Penulis</label>
-                            <input type="text" class="form-control" id="penulis" name="penulis"
-                                value="{{ old('penulis') }}" required>
-                            @error('penulis')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="peran_penulis">Peran Penulis</label>
-                            <select class="form-control" id="peran_penulis" name="peran_penulis">
-                            <option value="Penulis Pertama">Penulis Pertama</option>
-                            <option value="Anggota">Anggota</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="tahun_penelitian">Tahun Terbit</label>
                             <input type="number" class="form-control year-picker" id="tahun_penelitian"
                                 name="tahun_penelitian" value="{{ old('tahun_penelitian') }}" required>

@@ -25,7 +25,8 @@ class PenelitianLuaranController extends Controller
         return redirect()->back();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
 
         $data = PenLuaran::where('id', $id)->first();
 

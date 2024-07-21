@@ -32,14 +32,12 @@
                             <tr>
                                 <th>Nama Matakuliah</th>
                                 <th>SKS</th>
-                                <th>Pertemuan Valid</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data['matkul_dosen'] as $md)
                                 <tr>
                                     <td>{{ $md->nama_matkul }}</td>
-                                    <td>{{ $md->total_sks }}</td>
                                     <td>{{ $md->total_sks }}</td>
                                 </tr>
                             @endforeach

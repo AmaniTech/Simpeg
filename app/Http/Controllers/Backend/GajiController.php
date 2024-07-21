@@ -126,9 +126,6 @@ class GajiController extends Controller
 
     public function perhitungan(Request $request)
     {
-        $tanggal_awal = $request->input('tgl_awal');
-        $tanggal_akhir = $request->input('tgl_akhir');
-
 
         $min_sks = Setting::where('variabel', 'min_sks')->value('value');
         $hargapersks = Setting::where('variabel', 'hargapersks')->value('value');
@@ -136,12 +133,15 @@ class GajiController extends Controller
         $dosenId = Dosen::where('user_id', Auth::user()->id)->value('id');
 
 
-        $matkul_dosen = Jadwal::join('matkuls', 'matkuls.id', '=', 'jadwals.matkul_id')
+        $matkul_dosen =
+            Jadwal::join('matkuls', 'matkuls.id', '=', 'jadwals.matkul_id')
             ->where('dosen_id', $dosenId)
-            ->groupBy('matkul_id')
+            ->groupBy('matkul_id', 'matkuls.nama_matkul', 'matkuls.sks')
             ->whereMonth('tanggal', Carbon::parse($request->bulan)->format('m'))
             ->select('matkuls.nama_matkul', 'matkuls.sks', DB::raw('count(*) as jumlah_pertemuan'), DB::raw('matkuls.sks * 2 as total_sks'))
             ->get();
+
+
 
         $patokan = ($matkul_dosen->sum('total_sks') * $hargapersks) - ($min_sks * $hargapersks);
 
